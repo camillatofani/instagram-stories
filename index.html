@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Instagram Gallery</title>
+	<link rel="stylesheet" href="./assets/css/style.css">
+</head>
+<body>
+	<div class="slider">
+	<div class="timing">
+		<div class="line">
+			<div class="line_1 line_full">&nbsp;</div>
+		</div>
+		<div class="line">
+			<div class="line_2">&nbsp;</div>
+		</div>
+		<div class="line">
+			<div class="line_3">&nbsp;</div>
+		</div>
+	</div>
+	<div class="slide" id="slide_1"></div>
+	<div class="slide" id="slide_2" style="display: none;"></div>
+	<div class="slide" id="slide_3" style="display: none;"></div>
+	</div>
+
+	<script>
+		document.addEventListener("DOMContentLoaded", function () {
+			const lines = ['line_1', 'line_2', 'line_3'];
+			let currentIndex = 0;
+			const duration = 3000;
+
+			function switchLine() {
+				const currentLine = lines[currentIndex];
+				const currentElement = document.querySelector(`.${ currentLine }`);
+				const nextIndex = (currentIndex + 1) % lines.length;
+				const nextLine = lines[nextIndex];
+				const nextElement = document.querySelector(`.${ nextLine }`);
+				const currentSlide = document.getElementById(`slide_${ currentIndex + 1 }`);
+				const nextSlide = document.getElementById(`slide_${ nextIndex + 1 }`);
+
+				updateSlideVisibility(currentSlide, nextSlide);
+
+				currentElement.classList.remove('line_full');
+				nextElement.classList.add('line_full');
+
+				currentIndex = nextIndex;
+				setTimeout(switchLine, duration);
+			}
+
+			function updateSlideVisibility(currentSlide, nextSlide) {
+				currentSlide.style.display = 'none';
+				nextSlide.style.display = 'block';
+			}
+
+			setTimeout(() => {
+				switchLine();
+			}, duration);
+		});
+	</script>
+</body>
+</html>
